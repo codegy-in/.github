@@ -1,0 +1,34 @@
+name: Bug
+description: Something is broken for a client, a student or us
+labels: [bug]
+body:
+  - type: input
+    id: client
+    attributes:
+      label: Client slug
+      description: Leave empty if it affects everyone. Never paste student personal data here.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what should have happened
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. Sign in as owner\n2. Open Students\n3. ..."
+  - type: input
+    id: url
+    attributes:
+      label: URL
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - crit (down, data exposed, can't sign in)
+        - warn (feature broken, workaround exists)
+        - info (cosmetic)
+    validations:
+      required: true

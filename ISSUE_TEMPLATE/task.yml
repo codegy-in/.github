@@ -1,0 +1,21 @@
+name: Task
+description: A change to build. Comment "@claude" on the issue to have Claude pick it up.
+labels: [task]
+body:
+  - type: input
+    id: client
+    attributes:
+      label: Client slug
+      description: Leave empty for agency-wide work.
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should be true when this is done?
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      placeholder: "- [ ] ...\n- [ ] ..."

@@ -1,0 +1,6 @@
+{
+  "name": "Codegy CI",
+  "description": "Secret scan, typecheck, lint, test and build for a Codegy Node repo.",
+  "iconName": "octicon shield-check",
+  "categories": ["JavaScript", "TypeScript"]
+}
