@@ -1,7 +1,9 @@
 # Codegy: rules for every repo
 
 Each repo's `CLAUDE.md` starts from these and adds its own. The full plan is
-`codegy-in/hq` → `README.md`.
+`codegy-in/hq` → `README.md`; how a session reaches the live systems and
+test accounts is `codegy-in/hq` → `docs/CODING-AGENT-INSTRUCTIONS.md`
+(private repo; never copy its contents here).
 
 1. **No secrets in git, ever:** not in code, docs, skills, commit messages or
    commands. Secrets live in Vercel env, Supabase Vault, Bitwarden or Claude
