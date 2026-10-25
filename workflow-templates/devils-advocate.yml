@@ -40,8 +40,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - uses: actions/checkout@v4
-      - name: Shared skills match codegy-in/.github
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - name: Shared skills and the secret hook match codegy-in/.github
         run: |
           fail=0
           for s in devils-advocate karpathy-guidelines; do
@@ -52,4 +52,12 @@ jobs:
               echo "::error::.claude/skills/$s/SKILL.md differs from codegy-in/.github main. Not necessarily caused by this PR: the canonical copy may have changed (or raw.githubusercontent.com is serving a cached copy for ~5 min). Copy the canonical file here."; fail=1
             fi
           done
+          # The secret hook is shared the same way.
+          if curl -fsSL "https://raw.githubusercontent.com/codegy-in/.github/main/claude/hooks/block-secrets.mjs" -o /tmp/hook.mjs; then
+            if ! diff -q /tmp/hook.mjs .claude/hooks/block-secrets.mjs; then
+              echo "::error::.claude/hooks/block-secrets.mjs differs from codegy-in/.github main (claude/hooks). Copy the canonical file here."; fail=1
+            fi
+          else
+            echo "::error::Could not fetch the canonical secret hook from codegy-in/.github main."; fail=1
+          fi
           exit $fail
