@@ -24,8 +24,14 @@ test accounts is `codegy-in/hq` → `docs/CODING-AGENT-INSTRUCTIONS.md`
    integrations change.
 9. Commits: what and why, wrapped at 72 chars, `Co-Authored-By` trailer,
    author email = a Vercel team member (`CODEGY_GIT_EMAIL`).
-10. Student data (DPDP): never in issues, logs, screenshots or third-party
-    tools; data stays in Mumbai.
+10. Student data (DPDP): never in issues, logs, screenshots, chat
+    transcripts, agent sessions, debugging or support tools. The only
+    exception is product code sending the fields a feature needs to a
+    sub-processor already listed in the canonical list (`codegy-in/hq` →
+    `docs/CODING-AGENT-INSTRUCTIONS.md`, "Sub-processors"), e.g. answers to
+    the AI grader without names or contact details. Primary storage is in
+    India (Supabase, Mumbai); listed sub-processors may handle data outside
+    India. Never claim or imply that all data stays in India.
 11. **Devil's advocate before every change ships.** Run the `devils-advocate`
     skill (`.claude/skills/devils-advocate`) on the diff of every change before
     opening or merging its PR: code, migrations, config, hooks, and docs or
