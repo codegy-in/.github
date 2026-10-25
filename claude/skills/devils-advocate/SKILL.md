@@ -60,7 +60,7 @@ Work through each lens; skip one only if it truly cannot apply.
 4. **Data and money.** Irreversible data steps, backfills, defaults on existing
    rows, paise math and rounding, double-counting, idempotency on retries and
    duplicate webhooks, races (two tabs, two runs, two staff).
-5. **Consent and law.** DPDP (purpose, retention, erasure, data in Mumbai),
+5. **Consent and law.** DPDP (purpose, retention, erasure; primary storage in India, and data leaving India only to listed sub-processors),
    TRAI calling rules, Meta WhatsApp policy (opt-in, STOP, templates), and any
    promise the UI or an agreement makes that the code doesn't keep.
 6. **Operations.** How it is deployed (migration push, function deploy flags,
