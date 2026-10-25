@@ -8,10 +8,14 @@ Org-wide defaults for Codegy repos.
 | `claude/CLAUDE.shared.md` | Rules every repo's `CLAUDE.md` starts from |
 | `claude/hooks/block-secrets.mjs` | Canonical secret-blocking hook (PreToolUse + `--scan` for CI). Copy into each repo's `.claude/hooks/` |
 | `claude/hooks/session-start.sh` | Canonical SessionStart hook: deps, git author, load `KNOWLEDGE_GRAPH.md` |
+| `claude/skills/` | Canonical shared skills: `devils-advocate` (required review for every change, rule 11) and vendored `karpathy-guidelines` (rule 12). Copied into each repo's `.claude/skills/` |
 | `workflow-templates/` | "New workflow" templates shown in every org repo's Actions tab |
 
 This repo is **public** because GitHub only applies org default templates from
 a public `.github` repo. Never put anything private here.
 
-When a hook changes here, copy it into each repo in the same PR wave
-(`hq`, `platform`, `sites`) so they don't drift.
+When a hook, a shared skill or the `devils-advocate` workflow changes here,
+copy it into each repo in the same PR wave (`hq`, `platform`, `sites`), and
+merge this repo first: each repo's `devils-advocate` workflow diffs its skill
+copies against `main` here. Keep skills here generic; Codegy-specific rules
+belong in the private repos' `CLAUDE.md` because this repo is public.

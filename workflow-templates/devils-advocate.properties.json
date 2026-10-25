@@ -1,0 +1,6 @@
+{
+  "name": "Codegy devil's advocate",
+  "description": "Fails a PR whose body lacks the devils-advocate review or whose last verdict is DO NOT SHIP; checks shared skills match codegy-in/.github.",
+  "iconName": "octicon shield-check",
+  "categories": ["Automation"]
+}

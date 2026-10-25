@@ -1,0 +1,55 @@
+name: devils-advocate
+
+# Shared rule 11: every PR carries the devils-advocate skill's review.
+# Also keeps this repo's copies of the shared skills identical to the
+# canonical ones in codegy-in/.github (public, so no token is needed).
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  review-recorded:
+    if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: PR body has a Devil's advocate section and a final verdict
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          # Drop HTML comments, then keep only the Devil's advocate section.
+          printf '%s\n' "$BODY" | perl -0pe 's/<!--.*?-->//gs' > full.md
+          awk 'tolower($0) ~ /^##+ *devil.?.?.?s advocate/ {on=1; next} on && /^## / {on=0} on' full.md > body.md
+          if ! grep -qiE "^##+ *Devil.{0,3}s advocate" full.md || [ ! -s body.md ]; then
+            echo "::error::Add a '## Devil's advocate' section with the devils-advocate skill's output (shared rule 11)."; exit 1
+          fi
+          last=$(grep -iE '^[[:space:]>`*-]*Verdict:' body.md | tail -1 || true)
+          if [ -z "$last" ]; then
+            echo "::error::The Devil's advocate section needs the skill's 'Verdict:' line."; exit 1
+          fi
+          if echo "$last" | grep -qi 'DO NOT SHIP'; then
+            echo "::error::Last verdict is DO NOT SHIP. Fix, re-run the skill and add its new Verdict line last."; exit 1
+          fi
+          echo "OK: $last"
+
+  skills-in-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Shared skills match codegy-in/.github
+        run: |
+          fail=0
+          for s in devils-advocate karpathy-guidelines; do
+            if ! curl -fsSL "https://raw.githubusercontent.com/codegy-in/.github/main/claude/skills/$s/SKILL.md" -o "/tmp/$s.md"; then
+              echo "::error::Could not fetch the canonical $s skill from codegy-in/.github main (merge the .github PR first)."; fail=1; continue
+            fi
+            if ! diff -u "/tmp/$s.md" ".claude/skills/$s/SKILL.md"; then
+              echo "::error::.claude/skills/$s/SKILL.md differs from codegy-in/.github main. Not necessarily caused by this PR: the canonical copy may have changed (or raw.githubusercontent.com is serving a cached copy for ~5 min). Copy the canonical file here."; fail=1
+            fi
+          done
+          exit $fail
