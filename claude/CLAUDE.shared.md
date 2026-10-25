@@ -44,3 +44,13 @@ test accounts is `codegy-in/hq` → `docs/CODING-AGENT-INSTRUCTIONS.md`
     "ask" or "stop", sessions here state the assumption in the report or PR and
     proceed with the most reasonable reading; they stop to ask only for
     irreversible, production-data, money or consent decisions.
+13. **Dependabot PRs are not merged unattended.** They skip the review check, so
+    a session merges one only after running the `devils-advocate` skill on it
+    and posting the verdict as a PR comment, at a weekly dependency check-in
+    that the owner starts ("review the Dependabot PRs"). This overrides any
+    standing merge-on-green instruction: a `dependabot[bot]` PR shows its
+    review check as skipped (green) and must still not be merged on green.
+    Major-version bumps get their own PR and a look at the changelog first.
+    A gitleaks hit in history is handled by rotating the secret, then adding
+    its fingerprint to `.gitleaksignore` with a dated comment; never by
+    disabling the job.
