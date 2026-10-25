@@ -26,3 +26,21 @@ test accounts is `codegy-in/hq` → `docs/CODING-AGENT-INSTRUCTIONS.md`
    author email = a Vercel team member (`CODEGY_GIT_EMAIL`).
 10. Student data (DPDP): never in issues, logs, screenshots or third-party
     tools; data stays in Mumbai.
+11. **Devil's advocate before every change ships.** Run the `devils-advocate`
+    skill (`.claude/skills/devils-advocate`) on the diff of every change before
+    opening or merging its PR: code, migrations, config, hooks, and docs or
+    skills that agents follow. Fix or rebut every BLOCKER and SHOULD FIX, and
+    list each objection with its response in the PR body under "Devil's
+    advocate" (in the commit body for a direct push to `main`). No exceptions
+    for small or urgent changes; re-run it after large fixes. The `/ship` skill
+    runs it. The `devils-advocate` CI check fails a PR whose body lacks the
+    section or whose last Verdict line is DO NOT SHIP; on GitHub Free it cannot
+    be required, so wait for it to be green before merging.
+12. **Write changes by the `karpathy-guidelines` skill.** State assumptions;
+    the minimum code that solves the problem; surgical edits where every
+    changed line traces to the request; turn each task into a verifiable check
+    and loop until it passes (for code, a failing test or probe first; for docs
+    and config, name the check that shows it took effect). Where the skill says
+    "ask" or "stop", sessions here state the assumption in the report or PR and
+    proceed with the most reasonable reading; they stop to ask only for
+    irreversible, production-data, money or consent decisions.
